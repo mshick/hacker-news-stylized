@@ -5,7 +5,7 @@ A Safari extension giving Hacker News a little more style.
 
 ###Installation
 
-1. Download the built extension here: [HackerNewsStylized.safariextz](/HackerNewsStylized.safariextz)
+1. Download the built extension here: [HackerNewsStylized.safariextz](/HackerNewsStylized.safariextz?raw=true)
 2. Double-click to install!
 
 
