@@ -148,6 +148,16 @@ td {
     text-transform: lowercase;
 }
 
+.title small.show-hn,
+.title small.ask-hn {
+    font-variant: small-caps;
+    text-transform: none;
+}
+
+.title small.capitalize {
+    text-transform: capitalize;
+}
+
 .title a:first-letter {
     text-transform: uppercase;
 }

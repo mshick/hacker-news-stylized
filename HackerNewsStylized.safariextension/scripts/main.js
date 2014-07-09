@@ -108,10 +108,29 @@ function processRow(el, i) {
                 titleString = '';
 
                 for (var w in titleWords) {
+                    w = parseInt(w, 10);
                     var word = titleWords[w];
-                    if (minorWords.indexOf(word.toLowerCase()) > -1) {
-                        titleString += '<small>' + word + '</small>';
+
+                    if (w === 0 && word.toLowerCase() === 'show' && titleWords[w+1] && titleWords[w+1].toLowerCase() === 'hn:') {
+
+                        titleString += '<small class="show-hn">Show HN:</small>';
+                        titleWords[w+1] = '';
+
+                    } else if (w === 0 && word.toLowerCase() === 'ask' && titleWords[w+1] && titleWords[w+1].toLowerCase() === 'hn:') {
+
+                        titleString += '<small class="ask-hn">Ask HN:</small>';
+                        titleWords[w+1] = '';
+
+                    } else if (minorWords.indexOf(word.toLowerCase()) > -1) {
+
+                        if (w !== 0 && titleWords[w-1] && titleWords[w-1].slice(-1) === ':') {
+                            titleString += '<small class="capitalize">' + word + '</small>';
+                        } else {
+                            titleString += '<small>' + word + '</small>';
+                        }
+
                     } else {
+
                         titleString += word;
                     }
 
