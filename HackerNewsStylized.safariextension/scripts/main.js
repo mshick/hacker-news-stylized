@@ -1,7 +1,23 @@
 var pageContext = 'news';
 var body = document.getElementsByTagName('body')[0];
 
-var minorWords = ['a', 'an', 'and', 'as', 'is', 'with', 'the', 'of', 'to', 'in', 'for', 'on', 'at'];
+var minorWords = [
+    'a',
+    'an',
+    'and',
+    'as',
+    'is',
+    'with',
+    'the',
+    'of',
+    'to',
+    'in',
+    'for',
+    'on',
+    'at',
+    'by'
+];
+
 var vote;
 
 function createEl(tagName, className, attributes) {
