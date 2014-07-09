@@ -1,0 +1,233 @@
+center > table { display: none; }
+.ready center > table { display: block; }
+
+body,
+center,
+center > table {
+    width: 100% !important;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+
+    font-family: "Open Sans", sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 18px !important;
+}
+
+center > table > tbody > tr:first-of-type > td {
+    background-color: rgb(255, 102, 0);
+    padding: 1em;
+}
+
+center > table > tbody > tr:first-of-type > td > table,
+center > table > tbody > tr:nth-of-type(3) > td > table {
+    width: 85% !important;
+    margin: 0 auto !important;
+    max-width: 768px;
+}
+
+center > table > tbody > tr:nth-of-type(2) {
+    height: 30px !important;
+}
+
+.spacer {
+    height: 40px !important;
+    border: 1px solid rgb(100, 100, 100);
+}
+
+.news .headline > td:nth-of-type(2) {
+    visibility: hidden;
+}
+
+center > table > tbody > tr:nth-of-type(3) > td > table tr td.title:first-of-type {
+    visibility: hidden;
+}
+
+td {
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+#top {
+    font: 700 1.2em/1em "Open Sans" !important;
+    text-align: center;
+    position: relative;
+}
+
+#top > a {
+    vertical-align: bottom;
+}
+
+#top .logo img {
+    border: 1px solid rgb(246, 246, 239);
+    margin-right: 0.3em;
+}
+
+#top > a:link,
+#top > a:visited {
+    display: inline-block;
+    color: rgb(246, 246, 239) !important;
+}
+
+#top > a:hover {
+    color: rgb(255, 255, 255) !important;
+}
+
+#top .actions .menu-icon::before {
+    content: '≡';
+    font-size: 2.5em;
+    font-weight: 300;
+    color: rgb(246, 246, 239);
+}
+
+#top .actions {
+    width: 17%;
+    position: absolute;
+    right: 0px;
+    top: -5px;
+    text-align: right;
+}
+
+#top .actions ul {
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: auto;
+    z-index: 99999;
+
+    display: none;
+    list-style-type: none;
+    background-color: rgb(246, 246, 239);
+    border: 1px solid rgb(200,200,200);
+    padding: 8px 20px 8px 10px;
+    margin: 0px;
+    font-size: 0.7em;
+    font-weight: 300;
+    text-align: left;
+    text-transform: capitalize;
+}
+
+#top .actions:hover ul {
+    display: block;
+}
+
+#top .actions ul li {
+    padding: 0.2em 0;
+}
+
+#top .actions a:link,
+#top .actions a:visited {
+    color: rgb(100, 100, 100) !important;
+}
+
+#top .actions a:hover {
+    color: rgba(255, 102, 0, 0.8) !important;
+}
+
+.title {
+    text-align: center;
+}
+
+.title a {
+    font: 700 2.6em/1.2em "Open Sans" !important;
+    margin-bottom: 0.6em;
+    display: block;
+    text-transform: uppercase;
+    transition: color 0.1s ease;
+}
+
+.title a:hover {
+    color: rgba(255, 102, 0, 0.8) !important;
+}
+
+.title small {
+    font-family: "Gentium Book Basic";
+    font-style: italic;
+    text-transform: lowercase;
+}
+
+.title a:first-letter {
+    text-transform: uppercase;
+}
+
+.comhead {
+    font-family: "Open Sans" !important;
+    font-size: 1em !important;
+    font-weight: 400;
+    line-height: 0.5em;
+    display: block;
+    border-top: 1px solid rgb(34, 34, 34);
+    color: rgb(34, 34, 34) !important;
+    margin: 0;
+    text-align: center;
+    height: 0.7em;
+}
+
+.comhead b {
+    background: rgb(246, 246, 239);
+    padding: 0 20px;
+    position: relative;
+    top: -5px;
+}
+
+.subtext {
+    font-family: 'Open Sans', sans-serif !important;
+    font-weight: 300;
+    font-size: 1em !important;
+    margin-bottom: 1em;
+}
+
+.subtext ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.subtext li {
+    width: 50%;
+    display: inline-block;
+    float: left;
+}
+
+.subtext li.right a,
+.subtext li.right span {
+    display: inline-block;
+}
+
+a.vote-link:not(.voted):hover .num {
+    display: none;
+}
+
+a.vote-link:not(.voted):hover > span::before {
+    content: '👍';
+    text-align: right;
+    display: inline-block;
+    width: 20px;
+}
+
+.subtext .score::after {
+    font-size: 1em;
+    content: '•';
+    margin: 0 0.4em;
+}
+
+.subtext li.right {
+    text-align: right;
+}
+
+.login {
+    padding: 1em;
+    text-align: center;
+    background-color: rgb(246, 246, 239) !important;
+}
+
+.login form {
+    width: 23%;
+    margin: 0 auto;
+}
+
+.login b {
+    text-transform: uppercase;
+}

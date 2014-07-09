@@ -1,0 +1,85 @@
+/*center > table > tbody > tr:nth-of-type(3) > td > table:nth-of-type(2) {
+
+}*/
+
+.comment {
+    font-family: "Open Sans", sans-serif !important;
+    font-size: 0.9em !important;
+    font-weight: 400;
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+.comment i {
+    font-style: italic;
+}
+
+.comment b {
+    font-weight: 700;
+}
+
+.default {
+    padding: 0.6em 0 !important;
+}
+
+.default > div {
+    margin: 0px !important;
+}
+
+.default .comhead {
+    font-weight: 400;
+    font-size: 0.8em !important;
+    display: block;
+    border-top: none;
+    color: rgb(180, 180, 180) !important;
+    margin: 0;
+    text-align: left;
+}
+
+.comment-form textarea {
+    width: 100%;
+    background-color: rgb(252, 252, 245);
+    border-color: rgb(180,180,180);
+    border-width: 1px 0px;
+    padding: 1em;
+}
+
+.comment-form input[type='submit'] {
+    display: block;
+    margin: 0 auto;
+    /*font: 400 1.2em/1em "Open Sans" !important;*/
+    font-weight: 400;
+    font-family: "Gentium Book Basic" !important;
+    font-size: 1.5em !important;
+    text-transform: uppercase;
+    padding: 0.5em;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.comment-form input[type='submit']:hover {
+    color: rgba(255, 102, 0, 0.8) !important;
+}
+
+.votearrow {
+    background: transparent !important;
+    background-image: none !important;
+    color: rgb(180, 180, 180) !important;
+}
+
+.votearrow a:link,
+.votearrow a:visited {
+    color: rgb(180, 180, 180) !important;
+}
+
+.votearrow::before {
+    font-size: 0.8em;
+    content: '\25B2';
+    display: block;
+    background: transparent;
+}
+
+a:hover .votearrow {
+    color: rgba(255, 102, 0, 0.8) !important;
+}
