@@ -141,6 +141,8 @@ function processRow(el, i) {
 
                         if (w !== 0 && titleWords[w-1] && titleWords[w-1].slice(-1) === ':') {
                             titleString += '<small class="capitalize">' + word + '</small>';
+                        } else if (w !== 0 && titleWords[w-1] && titleWords[w-1] === '–') {
+                            titleString += '<small class="capitalize">' + word + '</small>';
                         } else {
                             titleString += '<small>' + word + '</small>';
                         }
