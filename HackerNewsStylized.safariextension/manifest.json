@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "name": "Hacker News Stylized",
+  "version": "1.0",
+  "description": "Giving Hacker News a little more style.",
+  "icons": {
+      "16": "icon-16.png",
+      "48": "icon-48.png",
+      "128": "icon-128.png"
+  },
+  "author": "Michael Shick",
+  "content_scripts": [
+    {
+      "matches": ["*://news.ycombinator.com/*"],
+      "css": ["styles/fonts.css", "styles/main.css", "styles/comments.css"],
+      "js": ["scripts/main.js"]
+    }
+  ],
+  "homepage_url": "https://github.com/mshick/hacker-news-stylized",
+  "short_name": "HNStylized"
+}
