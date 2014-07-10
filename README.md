@@ -1,7 +1,7 @@
 Hacker News Stylized
 ====================
 
-A Safari & Chrome extension to give Hacker News a little more style.
+A Safari & Chrome extension to give Hacker News a little more style. Just better styles, no functionality added or removed.
 
 ##Installation
 
