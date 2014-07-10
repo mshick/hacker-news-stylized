@@ -32,6 +32,7 @@
 			<string>styles/fonts.css</string>
 			<string>styles/main.css</string>
 			<string>styles/comments.css</string>
+			<string>styles/safari.css</string>
 		</array>
 	</dict>
 	<key>Description</key>

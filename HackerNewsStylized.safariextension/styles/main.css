@@ -214,7 +214,6 @@ a.vote-link:not(.voted):hover .num {
 }
 
 a.vote-link:not(.voted):hover > span::before {
-    content: '👍';
     text-align: right;
     display: inline-block;
     width: 20px;

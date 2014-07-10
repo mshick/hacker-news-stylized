@@ -1,0 +1,3 @@
+a.vote-link:not(.voted):hover > span::before {
+    content: '\D83D\DC4D';
+}

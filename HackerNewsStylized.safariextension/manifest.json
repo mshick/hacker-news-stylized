@@ -12,7 +12,7 @@
   "content_scripts": [
     {
       "matches": ["*://news.ycombinator.com/*"],
-      "css": ["styles/fonts.css", "styles/main.css", "styles/comments.css"],
+      "css": ["styles/fonts.css", "styles/main.css", "styles/comments.css", "styles/chrome.css"],
       "js": ["scripts/main.js"]
     }
   ],

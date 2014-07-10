@@ -1,0 +1,7 @@
+a.vote-link:not(.voted):hover > span::before {
+    content: '\2665';
+    color: rgba(255, 102, 0, 1);
+    font-size: 1.3em;
+    line-height: 1px;
+    vertical-align: middle;
+}
