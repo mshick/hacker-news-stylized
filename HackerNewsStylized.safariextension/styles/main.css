@@ -130,7 +130,7 @@ td {
     text-align: center;
 }
 
-.title a {
+.title a:link {
     font: 700 2.6em/1.2em "Open Sans" !important;
     margin-bottom: 0.6em;
     display: block;
@@ -138,30 +138,23 @@ td {
     transition: color 0.1s ease;
 }
 
-.title a:hover {
+.title a:link:hover {
     color: rgba(255, 102, 0, 0.8) !important;
 }
 
-.title small {
+.title a:link small {
     font-family: "Gentium Book Basic";
     font-style: italic;
     text-transform: lowercase;
 }
 
-.title small.show-hn,
-.title small.ask-hn,
-.title small.capitalize {
-/*    font-variant: small-caps;
-    text-transform: none;*/
+.title a:link small.show-hn,
+.title a:link small.ask-hn,
+.title a:link small.capitalize {
+    text-transform: capitalize;
+}
 
-    text-transform: capitalize;
-}
-/*
-.title small.capitalize {
-    text-transform: capitalize;
-}
-*/
-.title a:first-letter {
+.title a:link:first-letter {
     text-transform: uppercase;
 }
 

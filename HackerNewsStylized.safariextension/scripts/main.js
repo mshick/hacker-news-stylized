@@ -1,24 +1,7 @@
 var pageContext = 'news';
 var body = document.getElementsByTagName('body')[0];
 
-var minorWords = [
-    'a',
-    'an',
-    'and',
-    'as',
-    'is',
-    'with',
-    'the',
-    'of',
-    'to',
-    'in',
-    'for',
-    'on',
-    'at',
-    'by'
-];
-
-var vote;
+var voteEl;
 
 function createEl(tagName, className, attributes) {
 
@@ -42,21 +25,165 @@ function addClass(el, className) {
     el.className = classes.join(' ').trim();
 }
 
+function emptyEl(el) {
+    while (el.firstChild) {
+        el.removeChild(el.firstChild);
+    }
+}
+
+function processTitle(str) {
+
+    var minorWords = [
+        'a',
+        'an',
+        'and',
+        'as',
+        'is',
+        'with',
+        'the',
+        'of',
+        'to',
+        'in',
+        'for',
+        'on',
+        'at',
+        'by'
+    ];
+
+    var capitalChar = [
+        ':',
+        '–',
+        '.'
+    ];
+
+    var titleArr,
+        titleWords,
+        titleWord,
+        titleLength;
+
+    titleWords = str.split(' ');
+    titleLength = titleWords.length;
+
+    titleArr = [];
+
+    for (var w in titleWords) {
+        w = parseInt(w, 10);
+        titleWord = titleWords[w];
+
+        if (w === 0 && titleWord.toLowerCase() === 'show' && titleWords[w + 1] && titleWords[w + 1].toLowerCase() === 'hn:') {
+
+            titleArr.push('<small class="show-hn">Show HN:</small>');
+            titleWords[w + 1] = '';
+
+        } else if (w === 0 && titleWord.toLowerCase() === 'ask' && titleWords[w + 1] && titleWords[w + 1].toLowerCase() === 'hn:') {
+
+            titleArr.push('<small class="ask-hn">Ask HN:</small>');
+            titleWords[w + 1] = '';
+
+        } else if (minorWords.indexOf(titleWord.toLowerCase()) > -1) {
+
+            if (w !== 0 && titleWords[w - 1] && capitalChar.indexOf(titleWords[w - 1].slice(-1)) > -1) {
+
+                // Minor word, but needs capitalization
+                titleArr.push('<small class="capitalize">' + titleWord + '</small>');
+
+            } else if (w === titleLength - 1) {
+
+                // Last word, don't make it small
+                titleArr.push(titleWord);
+
+            } else {
+
+                // Default small word
+                titleArr.push('<small>' + titleWord + '</small>');
+            }
+
+        } else {
+
+            // Significant word, don't touch it
+            titleArr.push(titleWord);
+        }
+    }
+
+    return titleArr.join(' ');
+}
+
+function processSubtext(str, voteEl) {
+
+    var pieces,
+        score,
+        scoreEl,
+        by,
+        when,
+        comments,
+        ul,
+        liRight,
+        liLeft;
+
+    var ul = createEl('ul');
+    var pieces = str.split(/\sby\s|\s\|\s/);
+
+    if (pieces && pieces.length === 3) {
+
+        score = pieces[0].trim();
+        score = score.replace(/(<span id="score_\d+">)(\d+)\s/, '$1<span class="num">$2</span> ');
+
+        if (voteEl) {
+            scoreEl = createEl('span', 'score');
+            voteEl.innerHTML = score;
+            scoreEl.appendChild(voteEl);
+
+        } else {
+
+            scoreEl = createEl('span', 'score');
+            scoreEl.innerHTML = score;
+        }
+
+        by = pieces[1].match(/<a.+?<\/a>/)[0];
+        when = pieces[1].replace(/<a.+?<\/a>/, '').trim();
+        comments = pieces[2];
+
+        liLeft = createEl('li', 'left');
+        liRight = createEl('li', 'right');
+
+        liLeft.innerHTML = when;
+        liRight.appendChild(scoreEl);
+        liRight.innerHTML = liRight.innerHTML + comments;
+
+    } else {
+
+        score = '<span class="score_placeholder"></span>';
+
+        if (voteEl) {
+
+            scoreEl = createEl('span', 'score');
+            voteEl.innerHTML = score;
+            scoreEl.appendChild(voteEl);
+        }
+
+        when = pieces[0];
+
+        liLeft = createEl('li', 'left');
+        liRight = createEl('li', 'right');
+
+        liLeft.innerHTML = when;
+        liRight.appendChild(scoreEl);
+    }
+
+    ul.appendChild(liLeft);
+    ul.appendChild(liRight);
+
+    return ul;
+}
+
 function processRow(el, i) {
 
     var headlineCells,
         title,
         titleEl,
-        titleString,
-        titleWords,
-        subtext,
-        subtextString,
-        subtextPieces,
-        subtextScore,
-        subtextBy,
-        subtextComments,
-        subtextWhen,
-        comhead,
+        subtextEl,
+        subtextList,
+        comheadEl,
         voteLink,
         className;
 
@@ -65,11 +192,9 @@ function processRow(el, i) {
     if (pageContext === 'jobs') {
         if (i === 0) {
             return;
-        }
-        else if (i === 1) {
+        } else if (i === 1) {
             className = 'spacer';
-        }
-        else {
+        } else {
             i = i - 2;
         }
     }
@@ -113,53 +238,17 @@ function processRow(el, i) {
         }
 
         if (title) {
-            comhead = title.getElementsByClassName('comhead')[0];
 
             titleEl = title.getElementsByTagName('a')[0];
 
             if (titleEl) {
-                titleString = titleEl.innerHTML;
-                titleWords = titleString.split(' ');
-
-                titleString = '';
-
-                for (var w in titleWords) {
-                    w = parseInt(w, 10);
-                    var word = titleWords[w];
-
-                    if (w === 0 && word.toLowerCase() === 'show' && titleWords[w+1] && titleWords[w+1].toLowerCase() === 'hn:') {
-
-                        titleString += '<small class="show-hn">Show HN:</small>';
-                        titleWords[w+1] = '';
-
-                    } else if (w === 0 && word.toLowerCase() === 'ask' && titleWords[w+1] && titleWords[w+1].toLowerCase() === 'hn:') {
-
-                        titleString += '<small class="ask-hn">Ask HN:</small>';
-                        titleWords[w+1] = '';
-
-                    } else if (minorWords.indexOf(word.toLowerCase()) > -1) {
-
-                        if (w !== 0 && titleWords[w-1] && titleWords[w-1].slice(-1) === ':') {
-                            titleString += '<small class="capitalize">' + word + '</small>';
-                        } else if (w !== 0 && titleWords[w-1] && titleWords[w-1] === '–') {
-                            titleString += '<small class="capitalize">' + word + '</small>';
-                        } else {
-                            titleString += '<small>' + word + '</small>';
-                        }
-
-                    } else {
-
-                        titleString += word;
-                    }
-
-                    titleString += ' ';
-                }
-
-                titleEl.innerHTML = titleString;
+                titleEl.innerHTML = processTitle(titleEl.innerHTML);
             }
 
-            if (comhead) {
-                comhead.innerHTML = '<b>' + comhead.innerHTML.replace(/[(|)]/gi, '').trim() + '</b>';
+            comheadEl = title.getElementsByClassName('comhead')[0];
+
+            if (comheadEl) {
+                comheadEl.innerHTML = '<b>' + comheadEl.innerHTML.replace(/[(|)]/gi, '').trim() + '</b>';
             } else {
                 title.innerHTML += '<span class="comhead"></span>';
             }
@@ -167,62 +256,16 @@ function processRow(el, i) {
     }
 
     if ((i % mod) === 1) {
+
         className = 'subheadline';
 
-        subtext = el.getElementsByClassName('subtext')[0];
+        subtextEl = el.getElementsByClassName('subtext')[0];
 
-        if (subtext) {
-            subtextString = subtext.innerHTML;
-            subtextPieces = subtextString.split(/\sby\s|\s\|\s/);
+        if (subtextEl) {
 
-            if (subtextPieces && subtextPieces.length === 3) {
-                subtextScore = subtextPieces[0].trim();
-                subtextScore = subtextScore.replace(/(<span id="score_\d+">)(\d+)\s/, '$1<span class="num">$2</span> ');
-
-                if (voteEl) {
-                    var score = document.createElement('span');
-                    score.className = 'score';
-                    voteEl.innerHTML = subtextScore;
-                    score.appendChild(voteEl);
-                    // subtextScore = '<span class="score">' + voteEl.outerHTML + '</span>';
-                } else {
-                    // subtextScore = '<span class="score">' + subtextScore + '</span>';
-                    var score = document.createElement('span');
-                    score.className = 'score';
-                    score.innerHTML = subtextScore;
-                }
-
-                subtextBy = subtextPieces[1].match(/<a.+?<\/a>/)[0];
-                subtextWhen = subtextPieces[1].replace(/<a.+?<\/a>/, '').trim();
-                subtextComments = subtextPieces[2];
-
-                var list = createEl('ul');
-                var listItemLeft = createEl('li', 'left');
-                var listItemRight = createEl('li', 'right');
-                listItemLeft.innerHTML = subtextWhen;
-                listItemRight.appendChild(score);
-                listItemRight.innerHTML = listItemRight.innerHTML + subtextComments;
-                list.appendChild(listItemLeft);
-                list.appendChild(listItemRight);
-
-                while (subtext.firstChild) {
-                    subtext.removeChild(subtext.firstChild);
-                }
-
-                subtext.appendChild(list);
-            } else {
-                subtextScore = '<span class="score_placeholder"></span>';
-                if (voteEl) {
-                    voteEl.innerHTML = subtextScore;
-                    subtextScore = '<span class="score">' + voteEl.outerHTML + '</span>';
-                }
-                subtextWhen = subtextPieces[0];
-
-                subtext.innerHTML = '<ul>\
-                                        <li class="left">' + subtextWhen + '</li>\
-                                        <li class="right">' + subtextScore + '</li>\
-                                    </ul>';
-            }
+            subtextList = processSubtext(subtextEl.innerHTML, voteEl);
+            emptyEl(subtextEl);
+            subtextEl.appendChild(subtextList);
         }
     }
 
@@ -329,7 +372,7 @@ function setContext() {
         context = 'jobs';
     }
 
-    var indexPages = [ 'news', 'newest', 'show', 'ask' ];
+    var indexPages = ['news', 'newest', 'show', 'ask'];
     if (!pathname || !context || indexPages.indexOf(pathname) > -1) {
         context = 'news';
     }
