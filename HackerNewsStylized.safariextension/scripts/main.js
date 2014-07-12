@@ -152,13 +152,18 @@ function processSubtext(str, voteEl) {
 
     } else {
 
-        score = '<span class="score_placeholder"></span>';
+        score = createEl('span', 'score_placeholder');
+        scoreEl = createEl('span', 'score');
 
         if (voteEl) {
 
-            scoreEl = createEl('span', 'score');
-            voteEl.innerHTML = score;
+            emptyEl(voteEl);
+            voteEl.appendChild(score);
             scoreEl.appendChild(voteEl);
+
+        } else {
+
+            scoreEl.appendChild(score);
         }
 
         when = pieces[0];
