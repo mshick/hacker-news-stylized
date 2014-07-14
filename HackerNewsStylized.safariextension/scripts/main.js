@@ -70,15 +70,17 @@ function processTitle(str) {
         w = parseInt(w, 10);
         titleWord = titleWords[w];
 
-        if (w === 0 && titleWord.toLowerCase() === 'show' && titleWords[w + 1] && titleWords[w + 1].toLowerCase() === 'hn:') {
+        if (titleWord === 'Show HN:' || titleWord === 'Ask HN:') {
 
-            titleArr.push('<small class="show-hn">Show HN:</small>');
-            titleWords[w + 1] = '';
+            titleArr.push('<small class="capitalize">' + titleWord + '</small>');
+
+        } else if (w === 0 && titleWord.toLowerCase() === 'show' && titleWords[w + 1] && titleWords[w + 1].toLowerCase() === 'hn:') {
+
+            titleWords[w + 1] = 'Show HN:';
 
         } else if (w === 0 && titleWord.toLowerCase() === 'ask' && titleWords[w + 1] && titleWords[w + 1].toLowerCase() === 'hn:') {
 
-            titleArr.push('<small class="ask-hn">Ask HN:</small>');
-            titleWords[w + 1] = '';
+            titleWords[w + 1] = 'Ask HN:';
 
         } else if (minorWords.indexOf(titleWord.toLowerCase()) > -1) {
 
