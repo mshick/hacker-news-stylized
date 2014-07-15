@@ -14,18 +14,29 @@ body {
     font-family: "Open Sans", sans-serif !important;
     font-weight: 400 !important;
     font-size: 18px !important;
+    background-color: rgb(246, 246, 239);
 }
 
-center > table > tbody > tr:first-of-type > td {
-    background-color: rgb(255, 102, 0);
-    padding: 1em;
+center {
+    z-index: 1;
+    margin-top: 50px;
 }
 
-center > table > tbody > tr:first-of-type > td > table,
-center > table > tbody > tr:nth-of-type(3) > td > table {
+center > table > tbody > tr:first-of-type {
+    display: none;
+}
+
+center > table > tbody > tr:nth-of-type(3) > td > table,
+.container {
     width: 85% !important;
     margin: 0 auto !important;
     max-width: 768px;
+    position: relative;
+}
+
+center > table > tbody > tr:nth-of-type(3) > td > table > tbody {
+    display: block;
+    margin-left: -15px;
 }
 
 center > table > tbody > tr:nth-of-type(2) {
@@ -37,7 +48,7 @@ center > table > tbody > tr:nth-of-type(2) {
     border: 1px solid rgb(100, 100, 100);
 }
 
-.news .headline > td:nth-of-type(2) {
+.index .headline > td:nth-of-type(2) {
     visibility: hidden;
 }
 
@@ -49,14 +60,21 @@ td {
     font-family: 'Open Sans', sans-serif !important;
 }
 
+/* TOP ****************************************/
 #top {
-    font: 700 1.2em/1em "Open Sans" !important;
+    font: 700 1em/1em "Open Sans" !important;
     text-align: center;
-    position: relative;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin: 0 auto;
+    background-color: rgba(255, 100, 0, 0.92);
+    padding: 0.4em 0;
+    z-index: 10;
 }
 
-#top > a {
-    vertical-align: bottom;
+#top a {
+    vertical-align: top;
 }
 
 #top .logo img {
@@ -64,67 +82,140 @@ td {
     margin-right: 0.3em;
 }
 
-#top > a:link,
-#top > a:visited {
-    display: inline-block;
+#top a:link,
+#top a:visited {
     color: rgb(246, 246, 239) !important;
 }
 
-#top > a:hover {
+#top a:hover {
     color: rgb(255, 255, 255) !important;
 }
 
-#top .actions .menu-icon::before {
+/* NAVS *********************************/
+
+#navbar-header {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#sections {
+    top: -3px;
+    left: 0;
+    text-align: left;
+}
+
+#user {
+    top: -4px;
+    right: 0;
+    text-align: right;
+}
+
+.has-dropdown {
+    vertical-align: middle;
+    display: block;
+    position: absolute;
+    padding: 0;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    text-transform: pointer;
+}
+
+.has-dropdown:hover {
+    width: 125px;
+}
+
+.has-dropdown .active-section {
+    display: block;
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    color: rgba(246, 246, 239, 1);
+    font-size: 0.8em;
+    border-radius: 3px;
+    border-color: rgba(226, 226, 219, 0.4);
+}
+
+.has-dropdown .active-section a:link {
+    display: block;
+    padding: 0.2em 0.5em;
+}
+
+.has-dropdown:hover .active-section {
+    /*border-color: rgb(255, 255, 255);*/
+    border-color: transparent;
+    color: rgba(246, 246, 239, 1);
+    border-bottom-width: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.has-dropdown .active-section > a:hover {
+    /*background-color: rgba(0, 0, 0, 0.2);*/
+}
+
+.has-dropdown .menu-icon {
+    float: right;
+}
+
+.has-dropdown .menu-icon::before {
     content: '≡';
     font-size: 2.5em;
     font-weight: 300;
     color: rgb(246, 246, 239);
 }
 
-#top .actions {
-    width: 17%;
-    position: absolute;
-    right: 0px;
-    top: -5px;
-    text-align: right;
+
+.has-dropdown a:link,
+.has-dropdown a:visited {
+    color: rgb(246, 246, 239);
 }
 
-#top .actions ul {
-    width: 100%;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    left: auto;
-    z-index: 99999;
-
-    display: none;
-    list-style-type: none;
-    background-color: rgb(252, 252, 245);
-    border: 1px solid rgb(180,180,180);
-    padding: 8px 20px 8px 10px;
-    margin: 0px;
-    font-size: 0.7em;
-    font-weight: 300;
+.has-dropdown ul {
     text-align: left;
-    text-transform: capitalize;
+    width: 100%;
+    display: none;
+    padding: 8px 0px 0px;
+    margin: 0px;
+    position: absolute;
+    top: 21px;
+    left: 0;
+    z-index: 100;
+    border-style: solid;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+    border-color: transparent;
+
 }
 
-#top .actions:hover ul {
+.has-dropdown:hover ul {
     display: block;
 }
 
-#top .actions ul li {
-    padding: 0.2em 0;
+.has-dropdown ul li {
+    display: block;
+    background-color: rgba(255, 118, 0, 0.92);
 }
 
-#top .actions a:link,
-#top .actions a:visited {
-    color: rgb(100, 100, 100) !important;
+.has-dropdown ul li:last-child {
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 
-#top .actions a:hover {
-    color: rgba(255, 102, 0, 0.8) !important;
+.has-dropdown ul li:hover {
+    background-color: rgba(186, 80, 0, 0.95);
 }
+
+.has-dropdown ul li a:link {
+    display: block;
+    width: 100%;
+    padding: 0.5em 0;
+    margin: 0 0.5em;
+    font-size: 0.8em;
+}
+
+/* INDEX ITEMS *********************************/
 
 .title {
     text-align: center;

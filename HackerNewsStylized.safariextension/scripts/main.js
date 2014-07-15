@@ -1,4 +1,7 @@
-var pageContext = 'news';
+var context = '',
+    page = '',
+    username;
+
 var body = document.getElementsByTagName('body')[0];
 
 var voteEl;
@@ -22,6 +25,19 @@ function addClass(el, className) {
     var classes = el.className;
     classes = classes.split(' ');
     classes.push(className);
+    el.className = classes.join(' ').trim();
+}
+
+function removeClass(el, className) {
+    var classes = el.className;
+    classes = classes.split(' ');
+
+    for (var c in classes) {
+        if (classes[c] === className) {
+            delete classes[c];
+        }
+    }
+
     el.className = classes.join(' ').trim();
 }
 
@@ -196,7 +212,8 @@ function processRow(el, i) {
 
     var mod = 3;
 
-    if (pageContext === 'jobs') {
+    if (page === 'jobs') {
+
         if (i === 0) {
             return;
         } else if (i === 1) {
@@ -204,9 +221,9 @@ function processRow(el, i) {
         } else {
             i = i - 2;
         }
-    }
 
-    if (pageContext === 'item') {
+    } else if (context === 'item') {
+
         mod = 4;
     }
 
@@ -216,15 +233,11 @@ function processRow(el, i) {
 
         headlineCells = el.getElementsByTagName('td');
 
-        if (pageContext === 'news' || pageContext === 'jobs') {
+        if (context === 'index') {
             title = headlineCells[2];
-        } else {
-            title = headlineCells[1];
-        }
-
-        if (pageContext === 'news' || pageContext === 'jobs') {
             voteEl = headlineCells[1];
         } else {
+            title = headlineCells[1];
             voteEl = headlineCells[0];
         }
 
@@ -280,7 +293,7 @@ function processRow(el, i) {
         className = 'spacer';
     }
 
-    if (pageContext === 'item' && i === 3) {
+    if (context === 'item' && i === 3) {
         className = 'comment-form';
     }
 
@@ -295,33 +308,131 @@ function storyNodeClasses() {
     [].map.call(rows, processRow);
 }
 
-function processPagetop() {
-    var pagetopLinks = [];
+function buildSectionNav() {
 
+    var sectionNav = createEl('nav', 'has-dropdown', { 'id': 'sections' });
+    var sectionList = createEl('ul', 'dropdown section-list');
+
+    var sections = [
+        { 'label': 'News', 'href': '/news' },
+        { 'label': 'Newest', 'href': '/newest' },
+        { 'label': 'Show HN', 'href': '/show' },
+        { 'label': 'Ask HN', 'href': '/ask' },
+        { 'label': 'Jobs', 'href': '/jobs' }
+    ];
+
+    var activeSection;
+    sections = sections.filter(function (sec) {
+        if (sec.label.toLowerCase().replace(' ', '-') === page) {
+            activeSection = sec;
+            return false;
+        }
+
+        return true;
+    });
+
+    if (activeSection) {
+        var sectionActive = createEl('div', 'active-section');
+        var sectionActiveLink = createEl('a', '', { 'innerHTML': activeSection.label, 'href': activeSection.href });
+        sectionActive.appendChild(sectionActiveLink);
+        sectionNav.appendChild(sectionActive);
+    }
+
+    var section,
+        sectionEl,
+        sectionLink;
+
+    for (var s in sections) {
+        section = sections[s];
+        sectionEl = createEl('li', section.label.toLowerCase().replace(' ', '-'));
+        sectionLink = createEl('a', '', { 'href': section.href, 'innerHTML': section.label });
+        sectionEl.appendChild(sectionLink);
+        sectionList.appendChild(sectionEl);
+    }
+
+    sectionNav.appendChild(sectionList);
+
+    return sectionNav;
+}
+
+function buildUserNav() {
+
+    var userNav = createEl('nav', 'has-dropdown actions', { 'id': 'user' });
+    var userList = createEl('ul', 'dropdown user-list');
+
+    var userMenuIcon = createEl('span', 'menu-icon');
+    userNav.appendChild(userMenuIcon);
+
+    var userActions = [
+        { 'label': 'Login', 'href': '/newslogin' }
+    ];
+
+    if (username) {
+        userActions = [
+            { 'label': 'My Threads', 'href': '/threads?id=' + username },
+            { 'label': 'Submit', 'href': '/submit' },
+            { 'label': username, 'href': '/user?id=' + username },
+            { 'label': 'Logout', 'href': '/logout' }
+        ];
+    }
+
+    for (var a in userActions) {
+        action = userActions[a];
+        actionEl = createEl('li', action.label.toLowerCase().replace(' ', '-'));
+        actionLink = createEl('a', '', { 'href': action.href, 'innerHTML': action.label });
+        actionEl.appendChild(actionLink);
+        userList.appendChild(actionEl);
+    }
+
+    userNav.appendChild(userList);
+
+    return userNav;
+
+
+    // var actions = '<div class="actions"><span class="menu-icon"></span><ul>';
+    // [].map.call(userActions, function (link, i) {
+    //     var sectionActive = createEl('div', 'active-section');
+    //     var sectionActiveLink = createEl('a', '', { 'innerHTML': activeSection.label, 'href': activeSection.href });
+    //     sectionActive.appendChild(sectionActiveLink);
+    //     sectionNav.appendChild(sectionActive);
+    // });
+    // actions += '</ul></div>';
+
+    // return
+}
+
+function getUsername() {
     var pagetops = document.getElementsByClassName('pagetop');
     [].map.call(pagetops, function (pagetop) {
         var pagetopLinkEls = pagetop.getElementsByTagName('a');
         [].map.call(pagetopLinkEls, function (linkEl) {
-            pagetopLinks.push(linkEl.outerHTML);
-        });
-    });
-
-    if (pagetopLinks.length) {
-        var topTable = document.querySelectorAll('center > table > tbody > tr:first-of-type table tr')[0];
-        topTable.innerHTML = '<td id="top"><a class="logo" href="http://www.ycombinator.com"><img src="y18.gif" width="18" height="18"></a><a class="brand" href="news">Hacker News</a></td>';
-
-        var top = document.getElementById('top');
-
-        var actions = '<div class="actions"><span class="menu-icon"></span><ul>';
-        [].map.call(pagetopLinks, function (link, i) {
-            if (i > 0) {
-                actions += '<li>' + link + '</li>';
+            if (linkEl.href && linkEl.href.search(/user\?id\=(.+)/) > -1) {
+                username = linkEl.href.match(/user\?id\=(.+)/)[1];
             }
         });
-        actions += '</ul></div>';
+    });
+}
 
-        top.innerHTML = top.innerHTML + actions;
-    }
+function processPagetop() {
+
+    getUsername();
+
+    var headerEl = createEl('header', 'navbar', { 'id': 'top' });
+    var containerEl = createEl('div', 'container');
+
+    var navbarHeaderEl = createEl('div', 'navbar-header', { 'id': 'navbar-header' });
+    navbarHeaderEl.innerHTML = '<a class="logo" href="http://www.ycombinator.com"><img src="y18.gif" width="18" height="18"></a><a class="brand" href="news">Hacker News</a>';
+
+    var sectionNav = buildSectionNav();
+    var userNav = buildUserNav();
+
+    containerEl.appendChild(sectionNav);
+    containerEl.appendChild(navbarHeaderEl);
+    containerEl.appendChild(userNav);
+
+    headerEl.appendChild(containerEl);
+
+    body.insertBefore(headerEl, body.firstChild);
 }
 
 function doVote(e) {
@@ -356,7 +467,6 @@ function addListeners() {
 
 function setContext() {
 
-    var context = '';
     var pathname = window.location.pathname.substr(1);
 
     if (pathname === 'item' || pathname === 'newcomments') {
@@ -368,27 +478,43 @@ function setContext() {
     }
 
     if (pathname === 'newslogin') {
+        page = 'login';
         context = 'login';
     }
 
     if (pathname === 'user') {
+        page = 'account';
         context = 'account';
     }
 
-    if (pathname === 'jobs') {
-        context = 'jobs';
+    if (pathname === 'x') {
+        page = 'news';
     }
 
-    var indexPages = ['news', 'newest', 'show', 'ask'];
+    if (pathname === 'show') {
+        page = 'show-hn';
+    }
+
+    if (pathname === 'ask') {
+        page = 'ask-hn';
+    }
+
+    if (!pathname) {
+        page = 'news';
+    }
+
+    var indexPages = ['news', 'newest', 'show', 'ask', 'jobs', 'x'];
     if (!pathname || !context || indexPages.indexOf(pathname) > -1) {
-        context = 'news';
+        context = 'index';
+    }
+
+    if (!page) {
+        page = pathname;
     }
 
     // Add contextual body class
     addClass(body, context);
-
-    // Set var
-    pageContext = context;
+    addClass(body, page);
 }
 
 function main() {
