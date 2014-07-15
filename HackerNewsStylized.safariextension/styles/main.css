@@ -35,7 +35,7 @@ center > table > tbody > tr:nth-of-type(3) > td > table,
 }
 
 center > table > tbody > tr:nth-of-type(3) > td > table > tbody {
-    display: block;
+    /*display: block;*/
     margin-left: -15px;
 }
 
