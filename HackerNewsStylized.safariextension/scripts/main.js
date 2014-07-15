@@ -331,12 +331,17 @@ function buildSectionNav() {
         return true;
     });
 
+    var sectionActiveLink;
+
     if (activeSection) {
-        var sectionActive = createEl('div', 'active-section');
-        var sectionActiveLink = createEl('a', '', { 'innerHTML': activeSection.label, 'href': activeSection.href });
-        sectionActive.appendChild(sectionActiveLink);
-        sectionNav.appendChild(sectionActive);
+        sectionActiveLink = createEl('a', '', { 'innerHTML': activeSection.label, 'href': activeSection.href });
+    } else {
+        sectionActiveLink = createEl('a', 'placeholder', { 'innerHTML': 'Section' });
     }
+
+    var sectionActive = createEl('div', 'active-section');
+    sectionActive.appendChild(sectionActiveLink);
+    sectionNav.appendChild(sectionActive);
 
     var section,
         sectionEl,
@@ -387,18 +392,6 @@ function buildUserNav() {
     userNav.appendChild(userList);
 
     return userNav;
-
-
-    // var actions = '<div class="actions"><span class="menu-icon"></span><ul>';
-    // [].map.call(userActions, function (link, i) {
-    //     var sectionActive = createEl('div', 'active-section');
-    //     var sectionActiveLink = createEl('a', '', { 'innerHTML': activeSection.label, 'href': activeSection.href });
-    //     sectionActive.appendChild(sectionActiveLink);
-    //     sectionNav.appendChild(sectionActive);
-    // });
-    // actions += '</ul></div>';
-
-    // return
 }
 
 function getUsername() {
@@ -420,18 +413,19 @@ function processPagetop() {
     var headerEl = createEl('header', 'navbar', { 'id': 'top' });
     var containerEl = createEl('div', 'container');
 
+    var sectionNav = buildSectionNav();
+    containerEl.appendChild(sectionNav);
+
     var navbarHeaderEl = createEl('div', 'navbar-header', { 'id': 'navbar-header' });
     navbarHeaderEl.innerHTML = '<a class="logo" href="http://www.ycombinator.com"><img src="y18.gif" width="18" height="18"></a><a class="brand" href="news">Hacker News</a>';
-
-    var sectionNav = buildSectionNav();
-    var userNav = buildUserNav();
-
-    containerEl.appendChild(sectionNav);
     containerEl.appendChild(navbarHeaderEl);
-    containerEl.appendChild(userNav);
+
+    if (page !== 'submit' && page !== 'reply') {
+        var userNav = buildUserNav();
+        containerEl.appendChild(userNav);
+    }
 
     headerEl.appendChild(containerEl);
-
     body.insertBefore(headerEl, body.firstChild);
 }
 

@@ -17,7 +17,7 @@ body {
     background-color: rgb(246, 246, 239);
 }
 
-center {
+body > center {
     z-index: 1;
     margin-top: 50px;
 }
@@ -85,6 +85,7 @@ td {
 #top a:link,
 #top a:visited {
     color: rgb(246, 246, 239) !important;
+    text-decoration: none;
 }
 
 #top a:hover {
@@ -117,7 +118,7 @@ td {
     padding: 0;
     text-transform: uppercase;
     font-size: 0.9em;
-    text-transform: pointer;
+    cursor: pointer;
 }
 
 .has-dropdown:hover {
@@ -135,7 +136,8 @@ td {
     border-color: rgba(226, 226, 219, 0.4);
 }
 
-.has-dropdown .active-section a:link {
+.has-dropdown .active-section a:link,
+.has-dropdown .active-section .placeholder {
     display: block;
     padding: 0.2em 0.5em;
 }
@@ -149,10 +151,6 @@ td {
     border-bottom-left-radius: 0px;
 }
 
-.has-dropdown .active-section > a:hover {
-    /*background-color: rgba(0, 0, 0, 0.2);*/
-}
-
 .has-dropdown .menu-icon {
     float: right;
 }
@@ -163,7 +161,6 @@ td {
     font-weight: 300;
     color: rgb(246, 246, 239);
 }
-
 
 .has-dropdown a:link,
 .has-dropdown a:visited {
@@ -177,7 +174,7 @@ td {
     padding: 8px 0px 0px;
     margin: 0px;
     position: absolute;
-    top: 21px;
+    top: 22px;
     left: 0;
     z-index: 100;
     border-style: solid;
@@ -313,17 +310,24 @@ a.vote-link:not(.voted):hover > span::before {
     text-align: right;
 }
 
-.login {
-    padding: 1em;
+body.login,
+body.account {
+    margin-top: 50px;
     text-align: center;
     background-color: rgb(246, 246, 239) !important;
 }
 
-.login form {
+body.login form {
     width: 23%;
     margin: 0 auto;
 }
 
-.login b {
+ body.account form {
+    width: 50%;
+    margin: 0 auto;
+}
+
+ body.login b,
+ body.account b {
     text-transform: uppercase;
 }

@@ -1,9 +1,18 @@
 .comment {
-    font-family: "Open Sans", sans-serif !important;
-    font-size: 0.9em !important;
+    font-family: "Gentium Book Basic", serif !important;
+    font-size: 1.1em !important;
     font-weight: 400;
     display: block;
     margin-bottom: 0.5em;
+    line-height: 1.5em;
+}
+
+body.reply .comment {
+    font-size: 1.4em !important;
+}
+
+body.reply .comhead b {
+    padding: 0;
 }
 
 .comment i {
@@ -32,7 +41,8 @@
     text-align: left;
 }
 
-.comment-form textarea {
+.comment-form textarea,
+body.reply form textarea {
     width: 100%;
     background-color: rgb(252, 252, 245);
     border-color: rgb(180,180,180);
@@ -40,7 +50,8 @@
     padding: 1em;
 }
 
-.comment-form input[type='submit'] {
+.comment-form input[type='submit'],
+body.reply form input[type='submit'] {
     display: block;
     margin: 0 auto;
     /*font: 400 1.2em/1em "Open Sans" !important;*/
@@ -54,7 +65,8 @@
     cursor: pointer;
 }
 
-.comment-form input[type='submit']:hover {
+.comment-form input[type='submit']:hover,
+body.reply form input[type='submit']:hover {
     color: rgba(255, 102, 0, 0.8) !important;
 }
 
