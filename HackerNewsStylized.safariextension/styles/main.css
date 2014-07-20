@@ -56,13 +56,21 @@ center > table > tbody > tr:nth-of-type(2) {
     border: 1px solid rgb(100, 100, 100);
 }
 
-.index .headline > td:nth-of-type(2) {
-    visibility: hidden;
+.index .headline > td:first-of-type,
+.index .headline > td:nth-of-type(2),
+.index .subheadline > td:first-of-type,
+.index .preamble1 > td:first-of-type,
+.index .preamble1 > td:nth-of-type(2),
+.index .preamble2 > td:first-of-type,
+.index .preamble2 > td:nth-of-type(2) {
+    /*visibility: hidden;*/
+    display: none;
 }
 
+/*
 center > table > tbody > tr:nth-of-type(3) > td > table tr td.title:first-of-type {
     visibility: hidden;
-}
+}*/
 
 td {
     font-family: 'Open Sans', sans-serif !important;

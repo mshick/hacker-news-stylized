@@ -217,11 +217,23 @@ function processRow(el, i) {
     if (page === 'jobs') {
 
         if (i === 0) {
+            el.className = 'preamble1';
             return;
         } else if (i === 1) {
-            className = 'spacer';
+            el.className = 'preamble2 spacer';
+            return;
         } else {
             i = i - 2;
+        }
+
+    } else if (page === 'show-hn') {
+
+        if (i === 0) {
+            el.className = 'preamble1';
+            return;
+        } else if (i === 1) {
+            el.className = 'preamble2';
+            return;
         }
 
     } else if (context === 'item') {
