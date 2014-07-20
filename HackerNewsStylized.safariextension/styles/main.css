@@ -247,13 +247,13 @@ td {
 }
 
 #search-modal {
-    position: absolute;
+    position: fixed;
     z-index: 1000;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.25);
     overflow: scroll;
 }
 
@@ -266,7 +266,7 @@ td {
     padding: 0.5em;
     border-radius: 3px;
     background-color: rgb(246, 246, 239);
-    box-shadow: 3px 6px 10px;
+    box-shadow: 1px 1px 15px 1px #666;
 }
 
 #search-modal .gsc-input-box {
