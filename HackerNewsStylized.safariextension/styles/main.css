@@ -1,6 +1,14 @@
 center > table { display: none; }
 .ready center > table { display: block; }
 
+.hidden {
+    display: none;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
 body,
 center,
 center > table {
@@ -109,6 +117,7 @@ td {
     top: -4px;
     right: 0;
     text-align: right;
+    z-index: 9;
 }
 
 .has-dropdown {
@@ -211,6 +220,75 @@ td {
     margin: 0 0.5em;
     font-size: 0.8em;
 }
+
+/* Search ***********************************/
+
+.search {
+    position: absolute;
+    right: 40px;
+    top: 0;
+    z-index: 10;
+}
+
+.search-icon {
+    display: block;
+    cursor: pointer;
+}
+
+.search-icon::before {
+    color: rgb(246, 246, 239);
+    content: '\26B2';
+    font-size: 22px;
+    display: block;
+    height: 22px;
+    width: 22px;
+    line-height: 16px;
+    -webkit-transform: rotate(-45deg);
+}
+
+#search-modal {
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    overflow: scroll;
+}
+
+#search-modal > div {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    margin: 1em auto;
+    max-width: 800px;
+    padding: 0.5em;
+    border-radius: 3px;
+    background-color: rgb(246, 246, 239);
+    box-shadow: 3px 6px 10px;
+}
+
+#search-modal .gsc-input-box {
+    height: 40px !important;
+}
+
+#search-modal input.gsc-input {
+    height: 36px !important;
+    line-height: 36px !important;
+}
+
+#search-modal input.gsc-search-button-v2 {
+    padding: 10px 27px !important;
+}
+
+#search-modal .gsc-input-box,
+#search-modal .gsc-input-box-focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
 
 /* INDEX ITEMS *********************************/
 

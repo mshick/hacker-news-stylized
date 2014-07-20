@@ -4,7 +4,9 @@ var context = '',
 
 var body = document.getElementsByTagName('body')[0];
 
-var voteEl;
+var searchEl,
+    searchModalEl,
+    voteEl;
 
 function createEl(tagName, className, attributes) {
 
@@ -394,6 +396,23 @@ function buildUserNav() {
     return userNav;
 }
 
+function buildSearch() {
+
+    searchEl = createEl('div', 'search');
+
+    var searchOptions = {
+        id: 'search-open',
+        href: 'https://www.google.com/cse/publicurl?cx=005089167156428939100:yfbn6likefg',
+        title: 'Search with Google Custom Search Engine'
+    };
+
+    var searchIconEl = createEl('a', 'search-icon', searchOptions);
+
+    searchEl.appendChild(searchIconEl);
+
+    return searchEl;
+}
+
 function getUsername() {
     var pagetops = document.getElementsByClassName('pagetop');
     [].map.call(pagetops, function (pagetop) {
@@ -420,6 +439,9 @@ function processPagetop() {
     navbarHeaderEl.innerHTML = '<a class="logo" href="http://www.ycombinator.com"><img src="y18.gif" width="18" height="18"></a><a class="brand" href="news">Hacker News</a>';
     containerEl.appendChild(navbarHeaderEl);
 
+    var searchEl = buildSearch();
+    containerEl.appendChild(searchEl);
+
     if (page !== 'submit' && page !== 'reply') {
         var userNav = buildUserNav();
         containerEl.appendChild(userNav);
@@ -427,6 +449,27 @@ function processPagetop() {
 
     headerEl.appendChild(containerEl);
     body.insertBefore(headerEl, body.firstChild);
+}
+
+function buildSearchModal() {
+
+    searchModalEl = document.createElement('div');
+    searchModalEl.id = 'search-modal';
+    searchModalEl.className = 'hidden';
+
+    var searchEl = document.createElement('div');
+    searchEl.className = 'gcse-search';
+    searchEl.setAttribute('data-webSearchResultSetSize', 'large');
+
+    searchModalEl.appendChild(searchEl);
+
+    return searchModalEl;
+}
+
+function buildModals() {
+
+    var searchModal = buildSearchModal();
+    body.appendChild(searchModal);
 }
 
 function doVote(e) {
@@ -453,9 +496,38 @@ function doVote(e) {
 }
 
 function addListeners() {
+
+    var searchModalOpen = false;
+
     var voteLinks = document.getElementsByClassName('vote-link');
     [].map.call(voteLinks, function (link) {
         link.addEventListener('click', doVote);
+    });
+
+    document.onkeydown = function (event) {
+        if (event.keyCode == 27 && searchModalOpen) {
+            removeClass(body, 'modal-open');
+            searchModalEl.className = 'hidden';
+            searchModalOpen = false;
+        }
+    }
+
+    searchModalEl.addEventListener('click', function (event) {
+        event.stopPropagation();
+        if (event.target && event.target.id === 'search-modal') {
+            removeClass(body, 'modal-open');
+            this.className = 'hidden';
+            searchModalOpen = false;
+        }
+    });
+
+    var searchLinkEl = searchEl.getElementsByTagName('a')[0];
+    searchLinkEl.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        searchModalOpen = true;
+        addClass(body, 'modal-open');
+        searchModalEl.className = 'visible';
     });
 }
 
@@ -515,6 +587,7 @@ function main() {
 
     setContext();
 
+    buildModals();
     processPagetop();
     storyNodeClasses();
     addListeners();
