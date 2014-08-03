@@ -330,6 +330,7 @@ function buildSectionNav() {
     var sections = [
         { 'label': 'News', 'href': '/news' },
         { 'label': 'Newest', 'href': '/newest' },
+        { 'label': 'Most Active', 'href': '/active' },
         { 'label': 'Show HN', 'href': '/show' },
         { 'label': 'Ask HN', 'href': '/ask' },
         { 'label': 'Jobs', 'href': '/jobs' }
